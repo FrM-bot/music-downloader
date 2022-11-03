@@ -20,10 +20,10 @@ app.use(express.json())
 
 const PORT = process.env.PORT ?? 8000
 
-app.use('/tmp', express.static(path.join('public', 'tmp')))
+app.use('/tmp', express.static('tmp'))
 app.use(express.static('public'))
 
-app.use(express.static(path.join('public', 'tmp')))
+// app.use(express.static(path.join('public', 'tmp')))
 
 console.log(rootPath + 'public', 'path statics', DEST_DOWNLOADS);
 
