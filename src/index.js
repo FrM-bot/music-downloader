@@ -1,3 +1,4 @@
+import 'dotenv/config'
 import express from 'express'
 
 import cors from 'cors'
@@ -5,7 +6,6 @@ import cors from 'cors'
 import fs from 'fs'
 
 import { readdir, unlink } from "fs/promises"
-
 
 import ytdl from "ytdl-core"
 
@@ -18,11 +18,17 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 
-const PORT = 8000
+const PORT = process.env.PORT ?? 8000
 
 app.use(express.static(rootPath + '/public'))
 
-app.use('/musics', async (req, res, next) => {
+
+// app.get('/', function (req, res) {
+//     console.log(path.join(rootPath, 'public', 'index.html'));
+//     res.sendFile(path.join(rootPath, 'public', 'index.html'));
+// });
+
+app.get('/musics', async (req, res, next) => {
     try {
         const namesMusics = fs.readdirSync(DEST_DOWNLOADS)
         res.status(200).send(namesMusics)
@@ -93,9 +99,9 @@ app.post('/clear', async (req, res) => {
     }
 })
 
-app.use('*', async (req, res, next) => {
-    res.send('not found')
-})
+// app.use('*', async (req, res, next) => {
+//     res.send('not found')
+// })
 
 app.listen(PORT, () => {
     console.log(`🚀 Server ready at http://localhost:${PORT}`)

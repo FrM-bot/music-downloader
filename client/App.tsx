@@ -17,7 +17,7 @@ export type DataDownload = {
   iframeUrl: string
 }
 
-const RemoveMusic = async (name) => {
+const RemoveMusic = async (name: string) => {
   try {
     const response = await fetch('/clear', {
       headers: {
@@ -66,7 +66,7 @@ export default function Home() {
     window.onunload = function () {
       if (!navigator.sendBeacon) return
 
-      const url = "http://localhost:8000/clear"
+      const url = "/clear"
 
       navigator.sendBeacon(url)
     }

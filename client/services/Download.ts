@@ -1,6 +1,6 @@
 export const Download = async (url: FormDataEntryValue): Promise<any | Error> => {
   try {
-    const response = await fetch("http://localhost:8000/download", {
+    const response = await fetch("/download", {
       headers: {
         "Content-Type": "application/json",
       },
