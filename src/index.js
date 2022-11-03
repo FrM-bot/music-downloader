@@ -34,6 +34,7 @@ app.get('/musics', async (req, res, next) => {
         res.status(200).send(namesMusics)
     } catch (error) {
         console.error(error)
+        res.status(500).json({ error: error.message })
     }
 })
 
@@ -49,13 +50,15 @@ app.get('/music/:name', async (req, res, next) => {
         res.status(200).sendFile(path.join(DEST_DOWNLOADS, namesMusics[indexMusic]))
     } catch (error) {
         console.error(error)
+        res.status(500).json({ error: error.message })
     }
 })
 
 app.post('/download', async (req, res) => {
     try {
-        if (!fs.existsSync(DEST_DOWNLOADS)) {
-            fs.mkdirSync(DEST_DOWNLOADS)
+        if (!fs.existsSync(path.join('.', DEST_DOWNLOADS))) {
+            console.log(path.join('.', DEST_DOWNLOADS))
+            fs.mkdirSync(path.join('.', DEST_DOWNLOADS))
         }
         const info = await ytdl.getInfo(req.body.url)
         const files = fs.readdirSync(DEST_DOWNLOADS)
