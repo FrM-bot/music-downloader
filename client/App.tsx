@@ -15,6 +15,7 @@ export type DataDownload = {
   title: string
   thumbnail: ytdl.thumbnail | undefined
   iframeUrl: string
+  fileName: string
 }
 
 const RemoveMusic = async (name: string) => {
@@ -115,7 +116,7 @@ export default function Home() {
         {
           data &&
           <div className='flex justify-center mt-2'>
-            <Link props={{ title: data?.title, href: 'tmp/' + data?.title.concat('.mp3'), download: data?.title.concat('.mp3') }}>Confirm DownLoad</Link>
+            <Link props={{ title: data?.title, href: 'media/' + data?.fileName, download: data?.title.concat('.mp3') }}>Confirm DownLoad</Link>
           </div>
         }
 

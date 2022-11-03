@@ -73,17 +73,20 @@ app.post('/download', async (req, res) => {
 
         console.log(files)
 
+        const fileName = info.videoDetails.title.split(' ').join('_') + EXTENSION_FILE
+
         const details = {
             title: info.videoDetails.title,
             thumbnail: info.videoDetails.thumbnails[info.videoDetails.thumbnails.length -1] ?? '',
-            iframeUrl: info.videoDetails.embed.iframeUrl
+            iframeUrl: info.videoDetails.embed.iframeUrl,
+            fileName
         }
         if (files.includes(info.videoDetails.title + EXTENSION_FILE)) {
             return res.status(200).json(details)
         }
         ytdl.downloadFromInfo(info, {
             filter: (format) => format.container === 'webm' && format.hasAudio,
-        }).pipe(fs.createWriteStream(path.join(DEST_DOWNLOADS, info.videoDetails.title.split(' ').join('_') + EXTENSION_FILE)))
+        }).pipe(fs.createWriteStream(path.join(DEST_DOWNLOADS, fileName)))
         res.status(200).json(details)
     } catch (error) {
         console.error(error)
