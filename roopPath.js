@@ -4,6 +4,6 @@ export const rootPath = pathname.slice(1)
 
 console.log({rootPath})
 
-export const DEST_DOWNLOADS = path.join(rootPath, 'public', 'img')
+export const DEST_DOWNLOADS = path.join(rootPath, 'public', 'tmp')
 
 export const EXTENSION_FILE = '.mp3'
