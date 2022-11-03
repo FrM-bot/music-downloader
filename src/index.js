@@ -64,7 +64,9 @@ app.post('/download', async (req, res) => {
             })
         }
         const info = await ytdl.getInfo(req.body.url)
-        const files = fs.readdirSync(DEST_DOWNLOADS)
+        const files = fs.readdirSync(path.join('.', DEST_DOWNLOADS))
+
+        console.log(files)
 
         const details = {
             title: info.videoDetails.title,

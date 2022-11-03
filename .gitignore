@@ -1,4 +1,4 @@
 node_modules
-static
+public/tmp
 pnpm-lock.yaml
 package-lock.json

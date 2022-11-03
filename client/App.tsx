@@ -38,7 +38,7 @@ export default function Home() {
   const [data, setData] = useState<DataDownload>()
   const [errorMessage, seterrorMessage] = useState('')
 
-  const [url, setUrl] = useState('')
+  // const [url, setUrl] = useState('')
   const onSubmit = (e: FormEvent<HTMLFormElement> | undefined): void => {
     e?.preventDefault()
     const form = refForm.current
@@ -50,7 +50,7 @@ export default function Home() {
           return seterrorMessage(res?.error)
         }
         setData(res)
-        GetMusic(res.title).then((res) => setUrl(res)).catch(console.error)
+        // GetMusic(res.title).then((res) => setUrl(res)).catch(console.error)
         seterrorMessage('')
       }).catch(console.error)
     }
@@ -77,7 +77,7 @@ export default function Home() {
     setData(undefined)
   }
 
-  console.log(url, data);
+  console.log(data);
 
 
   return (
@@ -114,10 +114,19 @@ export default function Home() {
         </div>
         {
           data &&
-          <div className='flex justify-center'>
-            <Link props={{ title: data?.title, href: 'music/' + data?.title + '.mp3', download: data?.title }}>Confirm DownLoad</Link>
+          <div className='flex justify-center mt-2'>
+            <Link props={{ title: data?.title, href: 'tmp/' + data?.title.concat('.mp3'), download: data?.title.concat('.mp3') }}>Confirm DownLoad</Link>
           </div>
         }
+
+        {/* {
+          url &&
+          <div className='flex justify-center mt-2'>
+            <Link props={{ title: data?.title, href: 'tmp/' + data?.title.concat('.mp3'), download: data?.title.concat('.mp3') }}>Confirm DownLoad</Link>
+            <Link props={{ title: data?.title, href: url, download: data?.title.concat('.mp3') }}>Confirm DownLoad</Link>
+
+          </div>
+        } */}
       </div>
     </Layout>
   )
