@@ -21,7 +21,7 @@ app.use(express.json())
 const PORT = process.env.PORT ?? 8000
 
 // app.use('/public', express.static(rootPath + '/public'))
-app.use(express.static('public'))
+app.use(express.static(rootPath + '/public'))
 
 app.get('/test', function (req, res) {
     console.log(path.join(rootPath, 'public', 'index.html'), 'root');
