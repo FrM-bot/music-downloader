@@ -31,7 +31,7 @@ app.get('/test', function (req, res) {
 app.get('/musics', async (req, res, next) => {
     try {
         const namesMusics = fs.readdirSync(DEST_DOWNLOADS)
-        res.status(200).send(namesMusics)
+        res.status(200).send({  namesMusics, DEST_DOWNLOADS })
     } catch (error) {
         console.error(error)
         res.status(500).json({ error: error.message })
