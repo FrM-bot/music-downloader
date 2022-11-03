@@ -80,7 +80,7 @@ app.post('/download', async (req, res) => {
         }
         ytdl.downloadFromInfo(info, {
             filter: (format) => format.container === 'webm' && format.hasAudio,
-        }).pipe(fs.createWriteStream(path.join(DEST_DOWNLOADS, info.videoDetails.title + EXTENSION_FILE)))
+        }).pipe(fs.createWriteStream(path.join(DEST_DOWNLOADS, info.videoDetails.title.replace(' ', '_') + EXTENSION_FILE)))
         res.status(200).json(details)
     } catch (error) {
         console.error(error)
