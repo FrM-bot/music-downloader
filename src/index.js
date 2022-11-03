@@ -68,7 +68,7 @@ app.post('/download', async (req, res) => {
 
         const details = {
             title: info.videoDetails.title,
-            thumbnail: info.videoDetails.thumbnails.at(-1),
+            thumbnail: info.videoDetails.thumbnails[info.videoDetails.thumbnails.length -1] ?? '',
             iframeUrl: info.videoDetails.embed.iframeUrl
         }
         if (files.includes(info.videoDetails.title + EXTENSION_FILE)) {
