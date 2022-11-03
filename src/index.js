@@ -58,7 +58,10 @@ app.post('/download', async (req, res) => {
     try {
         if (!fs.existsSync(path.join('.', DEST_DOWNLOADS))) {
             console.log(path.join('.', DEST_DOWNLOADS))
-            fs.mkdirSync(path.join('.', DEST_DOWNLOADS))
+            // fs.mkdirSync(path.join('.', DEST_DOWNLOADS))
+            fs.mkdir(path.join('.', DEST_DOWNLOADS), {recursive: true}, err => {
+                console.error(err)
+            })
         }
         const info = await ytdl.getInfo(req.body.url)
         const files = fs.readdirSync(DEST_DOWNLOADS)
