@@ -20,13 +20,13 @@ app.use(express.json())
 
 const PORT = process.env.PORT ?? 8000
 
-app.use(express.static(rootPath + '/public'))
+app.use('/public', express.static(rootPath + '/public'))
 
 
-// app.get('/', function (req, res) {
-//     console.log(path.join(rootPath, 'public', 'index.html'));
-//     res.sendFile(path.join(rootPath, 'public', 'index.html'));
-// });
+app.get('/test', function (req, res) {
+    console.log(path.join(rootPath, 'public', 'index.html'));
+    res.sendFile(path.join(rootPath, 'public', 'index.html'))
+});
 
 app.get('/musics', async (req, res, next) => {
     try {
@@ -46,7 +46,7 @@ app.get('/music/:name', async (req, res, next) => {
         if (indexMusic === -1) {
             res.send({ error: 'music not found' })
         }
-        res.status(200).sendFile(DEST_DOWNLOADS + '/' + namesMusics[indexMusic])
+        res.status(200).sendFile(path.join(DEST_DOWNLOADS, namesMusics[indexMusic]))
     } catch (error) {
         console.error(error)
     }
