@@ -80,7 +80,7 @@ app.post('/download', async (req, res) => {
         }
         ytdl.downloadFromInfo(info, {
             filter: (format) => format.container === 'webm' && format.hasAudio,
-        }).pipe(fs.createWriteStream(path.join(DEST_DOWNLOADS, info.videoDetails.title.replace(' ', '_') + EXTENSION_FILE)))
+        }).pipe(fs.createWriteStream(path.join(DEST_DOWNLOADS, details.title.replaceAll(' ', '_') + EXTENSION_FILE)))
         res.status(200).json(details)
     } catch (error) {
         console.error(error)
@@ -90,8 +90,9 @@ app.post('/download', async (req, res) => {
 
 app.post('/clear', async (req, res) => {
     try {
-        if (req.body?.name) {
-            const pathFile = path.join(DEST_DOWNLOADS, req.body?.name + EXTENSION_FILE)
+        const name = req.body?.name.replaceAll(' ', '_') 
+        if (name) {
+            const pathFile = path.join(DEST_DOWNLOADS, name + EXTENSION_FILE)
             await unlink(pathFile)
         }
         const files = await readdir(DEST_DOWNLOADS)
