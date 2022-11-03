@@ -47,7 +47,7 @@ app.get('/music/:name', async (req, res, next) => {
         if (indexMusic === -1) {
             res.send({ error: 'music not found' })
         }
-        res.status(200).sendFile(path.join(DEST_DOWNLOADS, namesMusics[indexMusic]))
+        res.status(200).sendFile(path.join(rootPath, 'public', 'tmp', namesMusics[indexMusic]))
     } catch (error) {
         console.error(error)
         res.status(500).json({ error: error.message })
