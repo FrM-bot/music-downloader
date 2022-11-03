@@ -20,7 +20,8 @@ app.use(express.json())
 
 const PORT = process.env.PORT ?? 8000
 
-app.use('/tmp', express.static('tmp',  { extensions: ['.mp3', 'mp3'] }))
+app.use('/tmp', express.static('tmp'))
+app.use('/media', express.static(path.join(rootPath, 'tmp')))
 app.use(express.static('public'))
 
 // app.use(express.static(path.join('public', 'tmp')))
