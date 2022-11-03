@@ -21,7 +21,7 @@ app.use(express.json())
 const PORT = process.env.PORT ?? 8000
 
 // app.use('/public', express.static(rootPath + '/public'))
-app.use(express.static(rootPath + 'public'))
+app.use(express.static('public'))
 
 console.log(rootPath + 'public', 'path statics', DEST_DOWNLOADS);
 
