@@ -96,15 +96,17 @@ app.post('/download', async (req, res) => {
 
 app.post('/clear', async (req, res) => {
     try {
-        const name = req.body?.name.split(' ').join('_') 
+        const name = req.body?.name?.split(' ').join('_') 
+        console.log({name});
         if (name) {
             const pathFile = path.join(DEST_DOWNLOADS, name + EXTENSION_FILE)
             await unlink(pathFile)
+            return
         }
         const files = await readdir(DEST_DOWNLOADS)
+        console.log({files})
         if (files.length > 0) {
             files.forEach(async (file) => {
-
                 const pathFile = path.join(DEST_DOWNLOADS, file)
                 await unlink(pathFile)
                 console.log(file, pathFile)

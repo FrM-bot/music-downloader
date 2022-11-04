@@ -116,7 +116,7 @@ export default function Home() {
         {
           data &&
           <div className='flex justify-center mt-2'>
-            <Link props={{ title: data?.title, href: 'media/' + data?.fileName, download: data?.title.concat('.mp3') }}>Confirm DownLoad</Link>
+            <Link props={{ title: data?.title, href: 'media/' + data?.fileName, download: data?.title.concat('.mp3') }}>DownLoad</Link>
           </div>
         }
 
