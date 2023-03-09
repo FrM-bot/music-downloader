@@ -3,9 +3,9 @@ import express from 'express'
 
 import cors from 'cors'
 
-import fs from 'fs'
+import  { createWriteStream, existsSync } from 'fs'
 
-import { readdir, unlink } from "fs/promises"
+import { readdir, unlink, mkdir } from "fs/promises"
 
 import ytdl from "ytdl-core"
 
@@ -21,7 +21,6 @@ app.use(express.json())
 const PORT = process.env.PORT ?? 8000
 
 app.use('/tmp', express.static('tmp'))
-app.use('/media', express.static(path.join(rootPath, 'tmp')))
 app.use(express.static('public'))
 
 app.get('/test', function (req, res) {
@@ -30,7 +29,7 @@ app.get('/test', function (req, res) {
 
 app.get('/musics', async (req, res, next) => {
     try {
-        const namesMusics = fs.readdirSync(DEST_DOWNLOADS)
+        const namesMusics = await readdir(DEST_DOWNLOADS)
         res.status(200).send({  namesMusics, DEST_DOWNLOADS })
     } catch (error) {
         console.error(error)
@@ -41,7 +40,7 @@ app.get('/musics', async (req, res, next) => {
 app.get('/music/:name', async (req, res, next) => {
     const { name } = req.params
     try {
-        const namesMusics = fs.readdirSync(DEST_DOWNLOADS)
+        const namesMusics = await readdir(DEST_DOWNLOADS)
         const indexMusic = namesMusics.findIndex(music => music === name.replace('%', ' '))
         if (indexMusic === -1) {
             res.send({ error: 'music not found' })
@@ -55,13 +54,11 @@ app.get('/music/:name', async (req, res, next) => {
 
 app.post('/download', async (req, res) => {
     try {
-        if (!fs.existsSync(path.join('.', DEST_DOWNLOADS))) {
-            fs.mkdir(path.join('.', DEST_DOWNLOADS), {recursive: true}, err => {
-                console.error(err)
-            })
+        if (!existsSync(path.join('.', DEST_DOWNLOADS))) {
+            await mkdir(path.join('.', DEST_DOWNLOADS), {recursive: true})
         }
         const info = await ytdl.getInfo(req.body.url)
-        const files = fs.readdirSync(path.join('.', DEST_DOWNLOADS))
+        const files = await readdir(path.join('.', DEST_DOWNLOADS))
 
         const fileName = info.videoDetails.title.split(' ').join('_') + EXTENSION_FILE
 
@@ -76,7 +73,7 @@ app.post('/download', async (req, res) => {
         }
         ytdl.downloadFromInfo(info, {
             filter: (format) => format.container === 'webm' && format.hasAudio,
-        }).pipe(fs.createWriteStream(path.join(DEST_DOWNLOADS, fileName)))
+        }).pipe(createWriteStream(path.join(DEST_DOWNLOADS, fileName)))
         res.status(200).json(details)
     } catch (error) {
         console.error(error)
