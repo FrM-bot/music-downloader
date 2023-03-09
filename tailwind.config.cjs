@@ -10,10 +10,13 @@ module.exports = {
         sans: ['Barlow', ...defaultTheme.fontFamily.sans]
       },
       colors: {
-        'custom-cyan': '#15e8cf',
-        'custom-dark': '#18191c',
-        'custom-dark-2': '#242424b3',
-        'custom-white': '#fff'
+        'custom-cyan': 'rgba(var(--custom-cyan) / <alpha-value>)',
+        'custom-dark': 'rgba(var(--custom-dark) / <alpha-value>)',
+        'custom-dark-2': 'rgba(var(--custom-dark-2) / <alpha-value>)',
+        'custom-white': 'rgba(var(--custom-white) / <alpha-value>)',
+        'custom-pink': 'rgba(var(--custom-pink) / <alpha-value>)',
+        primary: 'rgba(var(--primary) / <alpha-value>)',
+        secondary: 'rgba(var(--secondary) / <alpha-value>)',
       }
     }
   },

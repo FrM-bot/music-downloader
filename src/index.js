@@ -54,11 +54,12 @@ app.get('/music/:name', async (req, res, next) => {
 
 app.post('/download', async (req, res) => {
     try {
-        if (!existsSync(path.join('.', DEST_DOWNLOADS))) {
+        const existDir = existsSync(path.join('.', DEST_DOWNLOADS))
+        if (!existDir) {
             await mkdir(path.join('.', DEST_DOWNLOADS), {recursive: true})
         }
         const info = await ytdl.getInfo(req.body.url)
-        const files = await readdir(path.join('.', DEST_DOWNLOADS))
+        const files = await readdir(path.join('.', DEST_DOWNLOADS)) || []
 
         const fileName = info.videoDetails.title.split(' ').join('_') + EXTENSION_FILE
 
@@ -68,7 +69,7 @@ app.post('/download', async (req, res) => {
             iframeUrl: info.videoDetails.embed.iframeUrl,
             fileName
         }
-        if (files.includes(info.videoDetails.title + EXTENSION_FILE)) {
+        if (files.includes(fileName)) {
             return res.status(200).json(details)
         }
         ytdl.downloadFromInfo(info, {
@@ -89,8 +90,8 @@ app.post('/clear', async (req, res) => {
             await unlink(pathFile)
             return
         }
-        const files = await readdir(DEST_DOWNLOADS)
-        if (files.length > 0) {
+        const files = await readdir(DEST_DOWNLOADS) || []
+        if (files?.length > 0) {
             files.forEach(async (file) => {
                 const pathFile = path.join(DEST_DOWNLOADS, file)
                 await unlink(pathFile)

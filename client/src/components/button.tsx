@@ -1,9 +1,9 @@
 import React, { ButtonHTMLAttributes, ReactElement } from 'react'
 import IconLoader from './icons/IconLoader'
 
-const Button = ({ children, props, isLoading }: { children: ReactElement | string,isLoading?: boolean, props: ButtonHTMLAttributes<HTMLButtonElement> }) => {
+const Button = ({ children, props, isLoading }: { children: ReactElement | string, isLoading?: boolean, props: ButtonHTMLAttributes<HTMLButtonElement> }) => {
   return (
-    <button className='rounded-md dark:bg-custom-dark-2 bg-white shadow-lg px-4 py-2 hover:shadow-black/30 hover:shadow-lg hover:border-custom-dark-2 hover:tracking-widest dark:hover:text-white dark:hover:bg-black text-base hover:bg-black hover:text-white [transition:all_.3s_ease] border-[1px] border-black' {...props}>
+    <button className='border py-2 px-3 rounded-md shadow-xl border-transparent dark:[background:linear-gradient(to_right,rgb(var(--custom-dark)),rgb(var(--custom-dark)))_padding-box,linear-gradient(to_right,rgb(var(--secondary)),rgb(var(--primary)))_border-box] [background:linear-gradient(to_right,#fff,#fff)_padding-box,linear-gradient(to_right,rgb(var(--secondary)),rgb(var(--primary)))_border-box]' {...props}>
       {
         isLoading ?
           <span className='flex items-center gap-1'>
