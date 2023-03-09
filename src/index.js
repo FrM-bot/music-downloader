@@ -24,12 +24,7 @@ app.use('/tmp', express.static('tmp'))
 app.use('/media', express.static(path.join(rootPath, 'tmp')))
 app.use(express.static('public'))
 
-// app.use(express.static(path.join('public', 'tmp')))
-
-console.log(rootPath + 'public', 'path statics', DEST_DOWNLOADS);
-
 app.get('/test', function (req, res) {
-    console.log(path.join(rootPath, 'public', 'index.html'), 'root');
     res.sendFile(path.join(rootPath, 'public', 'index.html'))
 });
 
@@ -48,7 +43,6 @@ app.get('/music/:name', async (req, res, next) => {
     try {
         const namesMusics = fs.readdirSync(DEST_DOWNLOADS)
         const indexMusic = namesMusics.findIndex(music => music === name.replace('%', ' '))
-        console.log(namesMusics[indexMusic], namesMusics, indexMusic, name);
         if (indexMusic === -1) {
             res.send({ error: 'music not found' })
         }
@@ -62,16 +56,12 @@ app.get('/music/:name', async (req, res, next) => {
 app.post('/download', async (req, res) => {
     try {
         if (!fs.existsSync(path.join('.', DEST_DOWNLOADS))) {
-            console.log(path.join('.', DEST_DOWNLOADS))
-            // fs.mkdirSync(path.join('.', DEST_DOWNLOADS))
             fs.mkdir(path.join('.', DEST_DOWNLOADS), {recursive: true}, err => {
                 console.error(err)
             })
         }
         const info = await ytdl.getInfo(req.body.url)
         const files = fs.readdirSync(path.join('.', DEST_DOWNLOADS))
-
-        console.log(files)
 
         const fileName = info.videoDetails.title.split(' ').join('_') + EXTENSION_FILE
 
@@ -97,30 +87,26 @@ app.post('/download', async (req, res) => {
 app.post('/clear', async (req, res) => {
     try {
         const name = req.body?.name?.split(' ').join('_') 
-        console.log({name});
         if (name) {
             const pathFile = path.join(DEST_DOWNLOADS, name + EXTENSION_FILE)
             await unlink(pathFile)
             return
         }
         const files = await readdir(DEST_DOWNLOADS)
-        console.log({files})
         if (files.length > 0) {
             files.forEach(async (file) => {
                 const pathFile = path.join(DEST_DOWNLOADS, file)
                 await unlink(pathFile)
-                console.log(file, pathFile)
             })
         }
+        res.send({
+            result: 'ok'
+        }).status(200)
     } catch (error) {
         console.error(error)
         res.status(500).json({ error: error.message })
     }
 })
-
-// app.use('*', async (req, res, next) => {
-//     res.send('not found')
-// })
 
 app.listen(PORT, () => {
     console.log(`🚀 Server ready at http://localhost:${PORT}`)

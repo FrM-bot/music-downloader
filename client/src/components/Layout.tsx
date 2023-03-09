@@ -5,7 +5,7 @@ const Layout = ({ children }) => {
     return (
         <>
             <div className='dark:bg-zinc-900 dark:text-white text-black min-h-screen'>
-                <div className='m-auto max-w-[60vh] lg:max-w-[95vh] px-4'>
+                <div className='m-auto lg:max-w-[70vw] max-w-[95vw] px-4'>
                     <header className='sticky top-2'>
 
                         <div className='shadow-xl p-3 flex justify-between items-center rounded-md bg-white/50 dark:bg-custom-dark-2/50 backdrop-blur-[3px]'>

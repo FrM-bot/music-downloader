@@ -2,13 +2,11 @@
   "name": "app-music-api",
   "type": "module",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon ./src/index.js",
     "start": "node ./src/index.js",
-    "build": "esbuild ./client/main.tsx --bundle --minify --outfile=public/bundle.js",
+    "build": "esbuild ./client/src/main.tsx --bundle --minify --watch --outfile=public/bundle.js",
     "watch:css": "npx tailwindcss -i ./client/styles/globals.css -o ./public/bundle.css --watch"
   },
   "keywords": [],
