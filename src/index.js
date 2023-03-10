@@ -21,6 +21,7 @@ app.use(express.json())
 const PORT = process.env.PORT ?? 8000
 
 app.use('/tmp', express.static('tmp'))
+app.use('/media', express.static(path.join(rootPath, 'tmp')))
 app.use(express.static('public'))
 
 app.get('/test', function (req, res) {
@@ -45,7 +46,7 @@ app.get('/music/:name', async (req, res, next) => {
         if (indexMusic === -1) {
             res.send({ error: 'music not found' })
         }
-        res.status(200).sendFile(path.join(rootPath, 'public', 'tmp', namesMusics[indexMusic]))
+        res.status(200).sendFile(path.join(DEST_DOWNLOADS, namesMusics[indexMusic]))
     } catch (error) {
         console.error(error)
         res.status(500).json({ error: error.message })
