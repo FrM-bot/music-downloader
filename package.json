@@ -6,8 +6,10 @@
   "scripts": {
     "dev": "nodemon ./src/index.js",
     "start": "node ./src/index.js",
-    "build": "esbuild ./client/src/main.tsx --bundle --minify --watch --outfile=public/bundle.js",
-    "watch:css": "npx tailwindcss -i ./client/styles/globals.css -o ./public/bundle.css --watch"
+    "build:watch": "esbuild ./client/src/main.tsx --bundle --minify --watch --outfile=public/bundle.js",
+    "build": "esbuild ./client/src/main.tsx --bundle --minify --outfile=public/bundle.js",
+    "watch:css": "npx tailwindcss -i ./client/styles/globals.css -o ./public/bundle.css --watch",
+    "css": "npx tailwindcss -i ./client/styles/globals.css -o ./public/bundle.css"
   },
   "keywords": [],
   "author": "",

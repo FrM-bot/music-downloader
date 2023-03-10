@@ -58,7 +58,7 @@ export default function Home() {
   }, [])
 
   const handlerDeleteMusic = (name: string) => {
-    RemoveMusic(name).then(console.log).catch(console.error)
+    RemoveMusic(name).catch(console.error)
     setData(undefined)
   }
 
